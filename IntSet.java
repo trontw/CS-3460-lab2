@@ -125,17 +125,22 @@ public class IntSet {
     		head = head.next;
 			return;
     	}
-		//Remove tail
+		//Remove tail, first increment temp ptr to the end of the list
 		temp = head;
 		while (temp.next.next != null) {
 			temp = temp.next;
 		}
-		//found tail, set next to null and delete.
+		//found tail, first check to see if it is the key, if it is,
+		//then set temp.next to null and then delete temp.
 		if (temp.next.next == null) {
 		Node tail = temp.next;
-		temp.next = null;
-		tail = null;
-		return;
+		System.out.print("The TAIL cur digit is  "+tail.digit);
+		System.out.println();
+		if (tail.digit == key) {
+			temp.next = null;
+			tail = null;
+			return;
+			}
 		}
 
 		//Next, loop through the list, excluding head and tail
@@ -155,7 +160,7 @@ public class IntSet {
 				// Perform remove.
 				System.out.print("INSIDE REMOVE2");
 				System.out.println();
-				System.out.print("REMOVE2 cur.next is "+cur.next);
+				System.out.print("REMOVE2 cur.next is "+cur.digit);
 				System.out.println();
 				if (cur.next == null) {
 					cur = null;
@@ -171,19 +176,16 @@ public class IntSet {
 				return;
 			}
 		}
-		
-		
 	}
 	
-	/* Commenting out for now */
 	/* Print the contents of the set in sorted order. */
-	/*
-	public void print() {
-		for (int i = 0; i < size; i++)
-			System.out.print(set[i] + " ");
-		System.out.println();
+	public static void print(Node head) {
+		while (head != null) {
+				System.out.print( head.digit + " ");
+				head = head.next;
+		}
 	}
-	*/
+	
 	static void display(Node head){
 		while (head != null) {
 				System.out.print( head.digit + " ");
@@ -214,7 +216,12 @@ public class IntSet {
 		System.out.print("Remove 5");
 		System.out.println();
 		remove(5);
-		display(head);
+		System.out.print("Remove 1");
+		System.out.println();
+		remove(1);
+		//display(head);
+		//System.out.println();
+		print(head);
 		System.out.println();
 	}
 }
