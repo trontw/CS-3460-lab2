@@ -120,12 +120,25 @@ public class IntSet {
 		if(head == null) {
 			throw new IllegalArgumentException("List is Empty!!");
 		}
-		//First check the head to see if it is 
-		//the digit to be removed.
+		//Remove Head
 		if(head.digit == key) {
     		head = head.next;
+			return;
     	}
-		//Next, loop through the list
+		//Remove tail
+		temp = head;
+		while (temp.next.next != null) {
+			temp = temp.next;
+		}
+		//found tail, set next to null and delete.
+		if (temp.next.next == null) {
+		Node tail = temp.next;
+		temp.next = null;
+		tail = null;
+		return;
+		}
+
+		//Next, loop through the list, excluding head and tail
 		while (cur != null) {
 			if (key != cur.digit) {
 				//Move pointer to digit to be removed
@@ -142,6 +155,12 @@ public class IntSet {
 				// Perform remove.
 				System.out.print("INSIDE REMOVE2");
 				System.out.println();
+				System.out.print("REMOVE2 cur.next is "+cur.next);
+				System.out.println();
+				if (cur.next == null) {
+					cur = null;
+					return;
+				}
 				cur = prev.next;
 				prev.next = cur.next;
 				//prev.next = cur;
@@ -192,9 +211,9 @@ public class IntSet {
 		System.out.println();
 		insert(5);
 		System.out.println();
-		System.out.print("Remove 2");
+		System.out.print("Remove 5");
 		System.out.println();
-		remove(2);
+		remove(5);
 		display(head);
 		System.out.println();
 	}
