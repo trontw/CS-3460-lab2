@@ -1,0 +1,23 @@
+Key = 4
+First node is 4
+Key = 2
+Key = 1
+Inside Stage 1 
+Inside Stage 3 
+Key = 3
+Inside Stage 1 
+Inside Stage 2 
+Key = 0
+Inside Stage 1 
+Inside Stage 3 
+Remove 2
+INSIDE REMOVE
+The REMOVE1 key is  2
+The REMOVE1 cur.digit is  0
+The REMOVE1 updated cur.digit is  1
+The REMOVE1 key is  2
+The REMOVE1 cur.digit is  1
+The REMOVE1 updated cur.digit is  2
+INSIDE REMOVE2
+The REMOVE2 cur.next.digit is  4
+0 1 2 4 

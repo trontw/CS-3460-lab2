@@ -2,90 +2,39 @@
  * This class maintains a set of ints. 
  */
 public class IntSet {
-	private static Node head;		// An array to represernt the set. This is always maintained in sorted order.
-	private static Node cur;
-	private static Node temp;
-	//private int capacity;	// The maximum allocated memory for the set.
-	//private int size;		// The number of elements currently stored in the set.
+	private static Node head;// A linked-list. This is always maintained in sorted order.
+	private static Node cur; // cur is the current node
+	private static Node temp;// temp is a temporary node
 	
 	public IntSet() {
-		//size = 0;
-		//capacity = 10;
 		head = null;
 		cur = null;
 		temp = null;
-		//instead of an array, we will need to build a linked list 
-		//with the head pointing to the new linked list made from 
-		//from the array passed in.
-		//head = new Node((int) head, head); 
 	}
-	/* -------------------------------------------------
-	 * Placing this here in case IntSet doesn't find it
-	 * in the directory. 
-	 * -------------------------------------------------
-	 
-	public class Node {
-		public int digit;
-		public Node next;
-	
-		public Node (int d, Node n) {
-			digit = d;
-			next = n;
-		}
-	}  
-	*/
-	/* 
-	static Node insertNode(Node head, int data) {
-		Node cur = new Node(data, head);
-		Node ptr;
-		cur.digit = data; 
-		cur.next = null;
 
-		if (head == null) 
-			head = cur;
-		else {
-			ptr = head;
-			while (ptr.next != null)
-				ptr = ptr.next;
-			ptr.next = cur;
-		}
-		return head;
-	}
+	/* -----------------------------------------------------
+	*  Find if a key is present in the linked list. 
+	*  Returns true if the key is present, otehrwise false.
+	*  -----------------------------------------------------
 	*/
-	/* 
-	public static Node arrToList(int[] head, int capacity) {
-		Node head = null;
-		for (int i = 0; i < capacity; ++i)
-			head = insertNode(head, head[i]);
-		return head;
-	}
-	*/
-	/* Commenting out for now */
-	/* Find if a key is present in the set. Returns true if the key is present, otehrwise false.*/
-	/* 
-	public boolean find(int key) {
-		// binary search
-		int low = 0, high = size-1;
-		while (low <= high) {
-			int mid = (low + high) / 2;
-			if (set[mid] == key) return true;
-			if (key > set[mid]) low = mid + 1;
-			else high = mid - 1;
+	public static boolean find(int key) {
+		while (cur.next != null) {
+			if (key != cur.digit) {
+				cur = cur.next;
+			} else {
+				return true;
+			}
 		}
 		return false;
 	}
-	*/
 	/* Insert a key into the list. */
 	public static void insert(int key) {
+		Node cur = head;
 		// Make sure that the key is not present.
-		//assert (!find(key));<-- bring back in after defining "find"
-		// Since we are using linked-list, size is
-		// not crucial. We only need to watch for 
-		// the end of the list (null).
+		assert (!find(key));
 
 		// Perform insert.
 		// Insert in sorted order.
-		Node cur = head;
 		if ( head == null) {
 			head = new Node(key, null);
 			System.out.print("First node is "+head.digit);
@@ -143,10 +92,7 @@ public class IntSet {
 					cur = head;
 					System.out.print("Inside Stage 3 ");
 					System.out.println();
-					//display(head);
-					//System.out.println();
-					return;
-					//cur.next = head;
+					return;					
 				} else if (cur.next == null) {
 					temp = new Node(key, null);
 					cur.next = temp;
@@ -157,68 +103,59 @@ public class IntSet {
 				return;
 			} else {
 				head = new Node(key, head);
-				System.out.print("The NEW node is  "+head.digit);
-				System.out.println();
-				//display(head);
-				//System.out.println();
 				return;
 			} 
-			/* 
-			if (key < head.digit) {
-				// Create a new head (head) with next pointing to 
-				// the previous head.
-				System.out.print(key+" is less than "+head.digit);
-				System.out.println();
-				head = new Node(key, head);
-				// Make the new digit the key
-				head.digit = key;
-				System.out.print("Smallest node head is "+head.digit);
-				System.out.println();
-				System.out.print("The next digit is  "+head.next.digit);
-				System.out.println();
-			} else if (key > head.digit && key < head.next.digit) {
-				System.out.print("The first digit is  "+head.digit);
-				System.out.println();
-				System.out.print("The next digit is  "+head.next.digit);
-				System.out.println();
-				System.out.print("The next NEXT digit is  "+head.next.next.digit);
-				System.out.println();
-			
-				//Save the current head
-				cur = head;
-				//Create the new node and point it to the next node
-				head = new Node(key, head);
-				// Make the new digit the key
-				head.digit = key;
-				//Point the previous node to the inserted node
-				head = cur.next;
-				//head.next = head;
-				System.out.print("Middle node head is "+head.digit);
-				System.out.println();
-			
-			}  else {
-				return;
-			}
-			*/
+	
 		}
 	}
-	/* Commenting out for now */
 	/* Remove a key from the head. */
-	/*
-	public void remove(int key) {
+	public static void remove(int key) {
+		Node prev = null;
+		Node cur = head;
 		// Make sure that the key is present.
 		assert (find(key));
-		
+		System.out.print("INSIDE REMOVE");
+		System.out.println();
 		// Find the position of the key.
-		int pos;
-		for (pos = 0; pos < size && set[pos] != key; pos++);
+		if(head == null) {
+			throw new IllegalArgumentException("List is Empty!!");
+		}
+		//First check the head to see if it is 
+		//the digit to be removed.
+		if(head.digit == key) {
+    		head = head.next;
+    	}
+		//Next, loop through the list
+		while (cur != null) {
+			if (key != cur.digit) {
+				//Move pointer to digit to be removed
+				System.out.print("The REMOVE1 key is  "+key);
+				System.out.println();
+				System.out.print("The REMOVE1 cur.digit is  "+cur.digit);
+				System.out.println();
+				prev = cur;
+				cur = cur.next;
+				System.out.print("The REMOVE1 updated cur.digit is  "+cur.digit);
+				System.out.println();
+				//return;
+			} else {//Key found, cur.next points to our digit
+				// Perform remove.
+				System.out.print("INSIDE REMOVE2");
+				System.out.println();
+				cur = prev.next;
+				prev.next = cur.next;
+				//prev.next = cur;
+				System.out.print("The REMOVE2 prev.next.digit is  "+prev.digit);
+				System.out.println();
+				System.out.print("The REMOVE2 cur.next.digit is  "+cur.digit);
+				System.out.println();
+				return;
+			}
+		}
 		
-		// Perform remove.
-		for (; pos < size; pos++)
-			set[pos] = set[pos+1];
-		size--;
+		
 	}
-	*/
+	
 	/* Commenting out for now */
 	/* Print the contents of the set in sorted order. */
 	/*
@@ -254,6 +191,10 @@ public class IntSet {
 		System.out.print("Key = 5");
 		System.out.println();
 		insert(5);
+		System.out.println();
+		System.out.print("Remove 2");
+		System.out.println();
+		remove(2);
 		display(head);
 		System.out.println();
 	}
