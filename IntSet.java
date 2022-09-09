@@ -17,18 +17,31 @@ public class IntSet {
 	*  Returns true if the key is present, otehrwise false.
 	*  -----------------------------------------------------
 	*/
-	public static boolean find(int key) {
-		while (cur.next != null) {
-			if (key != cur.digit) {
-				cur = cur.next;
-			} else {
-				return true;
+	/* public static boolean find(int key) { //used for tests// */
+	public boolean find(int key) {
+		cur = head;
+		//Initially check to see if the list is empty
+		if (cur != null) {
+			//List not empty, continue
+			while (cur != null) {
+				//Check key against current digit, if not found
+				//increment the cur digit. If found, return true.
+				if (key != cur.digit) {
+					cur = cur.next;
+				} else {
+					return true;
+				}
 			}
+			return false;
+		} else {
+			return false;//It was an empty list
 		}
-		return false;
 	}
+		
+	
 	/* Insert a key into the list. */
-	public static void insert(int key) {
+	/* public static void insert(int key) { //Used for tests//*/
+	public void insert(int key) {
 		Node cur = head;
 		// Make sure that the key is not present.
 		assert (!find(key));
@@ -37,8 +50,8 @@ public class IntSet {
 		// Insert in sorted order.
 		if ( head == null) {
 			head = new Node(key, null);
-			System.out.print("First node is "+head.digit);
-			System.out.println();
+			//System.out.print("First node is "+head.digit);
+			//System.out.println();
 			return;
 		}
 		while (cur != null) {
@@ -58,8 +71,8 @@ public class IntSet {
 			//If this is the only node, then we've already
 			//created the node and need to skip the key
 			if (cur.next != null) {
-				System.out.print("Inside Stage 1 ");
-				System.out.println();
+				//System.out.print("Inside Stage 1 ");
+				//System.out.println();
 				//System.out.print("The FIRST cur next digit is  "+cur.next.digit);
 				//System.out.println();
 				//if (key < head.digit) {
@@ -74,8 +87,8 @@ public class IntSet {
 					}
 				}
 				if (key > cur.digit) {
-					System.out.print("Inside Stage 2 ");
-					System.out.println();
+					//System.out.print("Inside Stage 2 ");
+					//System.out.println();
 					//System.out.print("The INSERT cur digit is  "+cur.digit);
 					//System.out.println();
 					//display(head);
@@ -90,8 +103,8 @@ public class IntSet {
 				} else if (key < cur.digit) {
 					head = new Node(key, head);//changed head to cur
 					cur = head;
-					System.out.print("Inside Stage 3 ");
-					System.out.println();
+					//System.out.print("Inside Stage 3 ");
+					//System.out.println();
 					return;					
 				} else if (cur.next == null) {
 					temp = new Node(key, null);
@@ -109,13 +122,14 @@ public class IntSet {
 		}
 	}
 	/* Remove a key from the head. */
-	public static void remove(int key) {
+	/* public static void remove(int key) { //used for tests// */
+	public void remove(int key) {
 		Node prev = null;
 		Node cur = head;
 		// Make sure that the key is present.
 		assert (find(key));
-		System.out.print("INSIDE REMOVE");
-		System.out.println();
+		//System.out.print("INSIDE REMOVE");
+		//System.out.println();
 		// Find the position of the key.
 		if(head == null) {
 			throw new IllegalArgumentException("List is Empty!!");
@@ -134,8 +148,8 @@ public class IntSet {
 		//then set temp.next to null and then delete temp.
 		if (temp.next.next == null) {
 		Node tail = temp.next;
-		System.out.print("The TAIL cur digit is  "+tail.digit);
-		System.out.println();
+		//System.out.print("The TAIL cur digit is  "+tail.digit);
+		//System.out.println();
 		if (tail.digit == key) {
 			temp.next = null;
 			tail = null;
@@ -147,21 +161,21 @@ public class IntSet {
 		while (cur != null) {
 			if (key != cur.digit) {
 				//Move pointer to digit to be removed
-				System.out.print("The REMOVE1 key is  "+key);
-				System.out.println();
-				System.out.print("The REMOVE1 cur.digit is  "+cur.digit);
-				System.out.println();
+				//System.out.print("The REMOVE1 key is  "+key);
+				//System.out.println();
+				//System.out.print("The REMOVE1 cur.digit is  "+cur.digit);
+				//System.out.println();
 				prev = cur;
 				cur = cur.next;
-				System.out.print("The REMOVE1 updated cur.digit is  "+cur.digit);
-				System.out.println();
+				//System.out.print("The REMOVE1 updated cur.digit is  "+cur.digit);
+				//System.out.println();
 				//return;
 			} else {//Key found, cur.next points to our digit
 				// Perform remove.
-				System.out.print("INSIDE REMOVE2");
-				System.out.println();
-				System.out.print("REMOVE2 cur.next is "+cur.digit);
-				System.out.println();
+				//System.out.print("INSIDE REMOVE2");
+				//System.out.println();
+				//System.out.print("REMOVE2 cur.next is "+cur.digit);
+				//System.out.println();
 				if (cur.next == null) {
 					cur = null;
 					return;
@@ -169,17 +183,21 @@ public class IntSet {
 				cur = prev.next;
 				prev.next = cur.next;
 				//prev.next = cur;
-				System.out.print("The REMOVE2 prev.next.digit is  "+prev.digit);
-				System.out.println();
-				System.out.print("The REMOVE2 cur.next.digit is  "+cur.digit);
-				System.out.println();
+				//System.out.print("The REMOVE2 prev.next.digit is  "+prev.digit);
+				//System.out.println();
+				//System.out.print("The REMOVE2 cur.next.digit is  "+cur.digit);
+				//System.out.println();
 				return;
 			}
 		}
 	}
-	
+	public void print () {
+		print(head);//call private print
+		System.out.println();
+	}
 	/* Print the contents of the set in sorted order. */
-	public static void print(Node head) {
+	//public static void print(Node head) {
+	private void print(Node head) {
 		while (head != null) {
 				System.out.print( head.digit + " ");
 				head = head.next;
@@ -192,7 +210,9 @@ public class IntSet {
 				head = head.next;
 		}
 	}
+	 
 	/* Main Test function */
+	/* 
 	public static void main(String args[]) {
 		System.out.print("Key = 4");
 		System.out.println();
@@ -224,4 +244,5 @@ public class IntSet {
 		print(head);
 		System.out.println();
 	}
+	*/
 }
